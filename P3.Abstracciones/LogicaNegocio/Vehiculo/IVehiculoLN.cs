@@ -7,5 +7,7 @@ namespace P3.Abstracciones.LogicaNegocio.Vehiculo
     public interface IVehiculoLN
     {
         Task<CustomResponse<List<VehiculoDTO>>> ListarVehiculos();
+
+        Task<CustomResponse<VehiculoDTO>> AgregarVehiculo(VehiculoDTO vehiculo);
     }
 }

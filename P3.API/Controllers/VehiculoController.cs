@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using P3.Abstracciones.LogicaNegocio.Vehiculo;
+using P3.Abstracciones.Modelos.ModelosDTO;
 
 namespace P3.API.Controllers
 {
@@ -23,5 +24,22 @@ namespace P3.API.Controllers
             }
             return Ok(resultado.Data);
         }
+
+        [HttpPost("api/vehiculos")] //Crear
+
+        public async Task<IActionResult> AgregarVehiculo(VehiculoDTO vehiculo)
+        {
+            var respuesta = await _vehiculoLN.AgregarVehiculo(vehiculo);
+
+            if (respuesta.EsError)
+            {
+                return BadRequest(respuesta.Mensaje);
+            }
+
+            return Ok(respuesta);
+
+        }
+
+
     }
 }

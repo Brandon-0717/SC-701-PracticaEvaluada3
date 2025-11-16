@@ -3,6 +3,7 @@ using AutoMapper;
 using P3.Abstracciones.AccesoDatos.Vehiculo;
 using P3.Abstracciones.LogicaNegocio.Vehiculo;
 using P3.Abstracciones.Modelos;
+using P3.Abstracciones.Modelos.ModelosAD;
 using P3.Abstracciones.Modelos.ModelosDTO;
 
 namespace P3.LogicaNegocio.Vehiculo
@@ -16,6 +17,28 @@ namespace P3.LogicaNegocio.Vehiculo
             _vehiculoAD = vehiculoAD;
             _mapper = mapper;
         }
+
+        public async Task<CustomResponse<VehiculoDTO>> AgregarVehiculo(VehiculoDTO vehiculo)
+        {
+            var customResponse = new CustomResponse<VehiculoDTO>();
+
+           if(await _vehiculoAD.AgregarVehiculo(_mapper.Map<VehiculoAD>(vehiculo)))
+            {
+                customResponse.Mensaje = "Vehículo agregado correctamente.";
+                customResponse.Data = vehiculo;
+                return customResponse;
+            }
+           else
+            {
+                customResponse.EsError = true;
+                customResponse.Mensaje = "Error al agregar el vehículo.";
+                return customResponse;
+            }
+
+        }
+
+
+
 
         public async Task<CustomResponse<List<VehiculoDTO>>> ListarVehiculos()
         {
