@@ -8,13 +8,14 @@ namespace P3.API.Controllers
     public class VehiculoController : Controller
     {
         private readonly IVehiculoLN _vehiculoLN;
+
         public VehiculoController(IVehiculoLN vehiculoLN)
         {
             _vehiculoLN = vehiculoLN;
         }
 
+        // GET api/vehiculos  (lista)
         [HttpGet("api/vehiculos")]
-
         public async Task<IActionResult> ListarVehiculos()
         {
             var resultado = await _vehiculoLN.ListarVehiculos();
@@ -25,9 +26,9 @@ namespace P3.API.Controllers
             return Ok(resultado.Data);
         }
 
-        [HttpPost("api/vehiculos")] //Crear
-
-        public async Task<IActionResult> AgregarVehiculo(VehiculoDTO vehiculo)
+        // POST api/vehiculos  (crear)
+        [HttpPost("api/vehiculos")]
+        public async Task<IActionResult> AgregarVehiculo([FromBody] VehiculoDTO vehiculo)
         {
             var respuesta = await _vehiculoLN.AgregarVehiculo(vehiculo);
 
@@ -37,9 +38,51 @@ namespace P3.API.Controllers
             }
 
             return Ok(respuesta);
-
         }
 
+        // 🔍 GET api/vehiculos/{placa}  (detalle)
+        [HttpGet("api/vehiculos/{placa}")]
+        public async Task<IActionResult> ObtenerVehiculoPorPlaca(string placa)
+        {
+            var respuesta = await _vehiculoLN.ObtenerVehiculoPorPlaca(placa);
 
+            if (respuesta.EsError)
+            {
+                return NotFound(respuesta.Mensaje);
+            }
+
+            return Ok(respuesta);
+        }
+
+        // ✏️ PUT api/vehiculos/{placa}  (editar)
+        [HttpPut("api/vehiculos/{placa}")]
+        public async Task<IActionResult> EditarVehiculo(string placa, [FromBody] VehiculoDTO vehiculo)
+        {
+            // Aseguramos que la placa usada para buscar sea la del route
+            vehiculo.Placa = placa;
+
+            var respuesta = await _vehiculoLN.EditarVehiculo(vehiculo);
+
+            if (respuesta.EsError)
+            {
+                return BadRequest(respuesta.Mensaje);
+            }
+
+            return Ok(respuesta);
+        }
+
+        // 🗑️ DELETE api/vehiculos/{placa}  (eliminar)
+        [HttpDelete("api/vehiculos/{placa}")]
+        public async Task<IActionResult> EliminarVehiculo(string placa)
+        {
+            var respuesta = await _vehiculoLN.EliminarVehiculo(placa);
+
+            if (respuesta.EsError)
+            {
+                return BadRequest(respuesta.Mensaje);
+            }
+
+            return Ok(respuesta);
+        }
     }
 }
