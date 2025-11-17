@@ -20,19 +20,19 @@
 El sistema **SGC** está desarrollado bajo una arquitectura en **capas**, que promueve la separación de responsabilidades y facilita la escalabilidad y el mantenimiento del código.
 
 **Estructura principal del proyecto:**
-- **SGC.Presentacion (MVC)**  
-  - Proyecto principal en **ASP.NET Core MVC** encargado de las vistas, controladores y manejo de rutas.
-  - Contiene las vistas Razor y archivos estáticos (CSS, JS, etc.).
+- **Presentacion (API Consumer / Frontend MVC)**  
+  - Proyecto principal en ASP.NET Core encargado del enrutamiento, controladores y la lógica de presentación, pero sin vistas Razor tradicionales.
+  - En lugar de renderizar vistas en servidor, este proyecto consume los servicios expuestos por la API para mostrar y gestionar la información.
   
-- **SGC.LogicaNegocio (LN)**  
+- **LogicaNegocio (LN)**  
   - Implementa las reglas de negocio y la validación de datos antes de acceder a la capa de datos.  
   - Interactúa con la capa de datos a través de interfaces y modelos DTO.
 
-- **SGC.AccesoDatos (DA)**  
+- **AccesoDatos (DA)**  
   - Se encarga de la gestión de datos, simulando o conectándose a una base de datos.  
   - Contiene las operaciones CRUD básicas (crear, leer, actualizar, eliminar).
 
-- **SGC.Abstracciones (DTO / Interfaces)**  
+- **Abstracciones (DTO / Interfaces)**  
   - Define las interfaces, modelos de transferencia de datos (DTO) y contratos de las capas.  
   - Facilita el acoplamiento débil entre las capas.
 
