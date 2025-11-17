@@ -11,7 +11,7 @@
 
 1. **Clona el repositorio**
    
-| https://github.com/Brandon-0717/SC-701-Proyecto.git |
+|https://github.com/Brandon-0717/SC-701-PracticaEvaluada3.git|
 
 # 🧩 Especificación Básica de la Practica 
 
